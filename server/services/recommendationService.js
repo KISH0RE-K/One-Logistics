@@ -3,6 +3,53 @@ const { AppError } = require('../middleware/errorHandler');
 
 const ML_TIMEOUT_MS = 10000; // 10 seconds
 
+const validOption = (option) =>
+  option &&
+  typeof option.mode === 'string' &&
+  Number.isFinite(Number(option.cost)) &&
+  Number.isFinite(Number(option.time));
+
+/**
+ * Keep the public API stable while accepting results from the currently
+ * deployed ML service as well as the documented response shape.
+ */
+const normalizeRecommendation = (payload) => {
+  const recommendedMode = payload?.recommendedMode;
+  let options = Array.isArray(payload?.options) ? payload.options : null;
+
+  // The first version of the Python service returned its chosen option
+  // separately and put only the other modes under `alternatives`.
+  if (!options && payload?.recommendedCost !== undefined && payload?.recommendedTime !== undefined) {
+    options = [
+      {
+        mode: recommendedMode,
+        cost: payload.recommendedCost,
+        time: payload.recommendedTime,
+      },
+      ...(Array.isArray(payload.alternatives) ? payload.alternatives : []),
+    ];
+  }
+
+  if (
+    typeof recommendedMode !== 'string' ||
+    !Array.isArray(options) ||
+    !options.every(validOption) ||
+    !options.some((option) => option.mode === recommendedMode)
+  ) {
+    throw new AppError('ML service returned an invalid recommendation payload', 502);
+  }
+
+  return {
+    ...payload,
+    recommendedMode,
+    options: options.map((option) => ({
+      mode: option.mode,
+      cost: Number(option.cost),
+      time: Number(option.time),
+    })),
+  };
+};
+
 /**
  * Proxy a recommendation request to the Python/FastAPI ML service.
  * LLM function signature: getShippingRecommendation(shipmentData)
@@ -28,7 +75,7 @@ const getShippingRecommendation = async (shipmentData) => {
       timeout: ML_TIMEOUT_MS,
       headers: { 'Content-Type': 'application/json' },
     });
-    return response.data;
+    return normalizeRecommendation(response.data);
   } catch (err) {
     if (err.code === 'ECONNREFUSED') {
       throw new AppError('ML recommendation service is currently unavailable', 503);
@@ -46,4 +93,4 @@ const getShippingRecommendation = async (shipmentData) => {
   }
 };
 
-module.exports = { getShippingRecommendation };
+module.exports = { getShippingRecommendation, normalizeRecommendation };

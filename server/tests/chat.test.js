@@ -1,6 +1,9 @@
 const request = require('supertest');
+jest.mock('../services/aiService', () => ({ chat: jest.fn() }));
+
 const app = require('../server');
 const AuditLog = require('../models/AuditLog');
+const aiService = require('../services/aiService');
 const { connectTestDB, clearDB, disconnectTestDB, registerUser } = require('./helpers');
 
 beforeAll(connectTestDB);
@@ -13,6 +16,10 @@ describe('Chat & Conversations', () => {
   beforeEach(async () => {
     ({ token: tokenA } = await registerUser({ email: 'chatA@example.com' }));
     ({ token: tokenB } = await registerUser({ email: 'chatB@example.com', name: 'User B' }));
+    aiService.chat.mockResolvedValue({
+      content: 'How can I help with your logistics needs?',
+      toolResults: [],
+    });
   });
 
   const sendChat = (token, body) =>
@@ -30,7 +37,13 @@ describe('Chat & Conversations', () => {
       expect(conversation.messages[0].role).toBe('user');
       expect(conversation.messages[0].content).toBe('Where is my shipment?');
       expect(conversation.messages[1].role).toBe('assistant');
+      expect(conversation.messages[1].content).toBe('How can I help with your logistics needs?');
       expect(conversation.channel).toBe('web');
+      expect(aiService.chat).toHaveBeenCalledWith(
+        expect.anything(),
+        'Where is my shipment?',
+        []
+      );
     });
 
     it('appends to an existing conversation when conversationId is supplied', async () => {
@@ -49,6 +62,28 @@ describe('Chat & Conversations', () => {
       const log = await AuditLog.findOne({ action: 'CHATBOT_REQUEST' });
       expect(log).not.toBeNull();
       expect(log.resource).toBe('conversation');
+    });
+
+    it('persists every tool result before the assistant reply', async () => {
+      aiService.chat.mockResolvedValueOnce({
+        content: 'Your shipment is in transit.',
+        toolResults: [
+          { name: 'getShipmentStatus', data: { currentStatus: 'in_transit' } },
+          { name: 'getUserShipments', data: { count: 1 } },
+        ],
+      });
+
+      const res = await sendChat(tokenA, { message: 'Where is my shipment?' });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.conversation.messages.map((message) => message.role)).toEqual([
+        'user',
+        'tool',
+        'tool',
+        'assistant',
+      ]);
+      expect(res.body.data.conversation.messages[1].toolName).toBe('getShipmentStatus');
+      expect(res.body.data.conversation.messages[3].content).toBe('Your shipment is in transit.');
     });
 
     it('rejects an empty message with 400', async () => {

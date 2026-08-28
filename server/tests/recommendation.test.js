@@ -56,6 +56,35 @@ describe('POST /api/recommendation', () => {
     );
   });
 
+  it('normalizes the ML service response used by the included Python service', async () => {
+    axios.post.mockResolvedValueOnce({
+      data: {
+        recommendedMode: 'Air',
+        recommendedCost: 820,
+        recommendedTime: 24,
+        alternatives: [
+          { mode: 'Road', cost: 480, time: 60, score: 0.4 },
+          { mode: 'Rail', cost: 350, time: 96, score: 0.3 },
+        ],
+      },
+    });
+
+    const res = await request(app)
+      .post('/api/recommendation')
+      .set('Authorization', `Bearer ${token}`)
+      .send(samplePayload);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toMatchObject({
+      recommendedMode: 'Air',
+      options: [
+        { mode: 'Air', cost: 820, time: 24 },
+        { mode: 'Road', cost: 480, time: 60 },
+        { mode: 'Rail', cost: 350, time: 96 },
+      ],
+    });
+  });
+
   it('returns 503 when ML service is unreachable', async () => {
     const err = new Error('Connection refused');
     err.code = 'ECONNREFUSED';
