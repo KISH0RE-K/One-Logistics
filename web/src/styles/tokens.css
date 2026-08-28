@@ -1,0 +1,159 @@
+/* ==========================================================================
+   Design tokens - One Logistics Experience
+   A warm, enterprise logistics palette: deep brown, golden yellow, warm
+   neutrals. Every colour, radius, shadow and space step used anywhere in the
+   app resolves back to a token declared here.
+   ========================================================================== */
+
+:root {
+  /* -- Brand: golden yellow (primary action) ----------------------------- */
+  --gold-50: #fff9e8;
+  --gold-100: #fff1cc;
+  --gold-200: #ffe29a;
+  --gold-300: #ffd166;
+  --gold-400: #fbc02d;
+  --gold-500: #f6b400; /* primary */
+  --gold-600: #dc9e00;
+  --gold-700: #b88100;
+
+  /* -- Brand: deep brown (surfaces, headers, footers) -------------------- */
+  --brown-50: #f7f3ee;
+  --brown-100: #e9dfd2;
+  --brown-200: #cdbba4;
+  --brown-300: #a68d6f;
+  --brown-400: #7d6446;
+  --brown-500: #5c462d;
+  --brown-600: #4a3520;
+  --brown-700: #33240f;
+  --brown-800: #2b1e0d;
+  --brown-900: #241a0f; /* deepest */
+
+  /* -- Neutrals (warm, never cold grey) ---------------------------------- */
+  --white: #ffffff;
+  --neutral-50: #faf9f7;
+  --neutral-100: #f4f2ee;
+  --neutral-200: #e8e4dd;
+  --neutral-300: #d6d1c7;
+  --neutral-400: #a9a297;
+  --neutral-500: #7c756a;
+  --neutral-600: #5a544b;
+  --neutral-700: #403b34;
+  --neutral-800: #2a2621;
+  --neutral-900: #1a1a1a;
+
+  /* -- Semantic ---------------------------------------------------------- */
+  --success-bg: #e6f4ec;
+  --success-fg: #10653a;
+  --success-border: #a8d9bf;
+
+  --info-bg: #e7f0fa;
+  --info-fg: #14508f;
+  --info-border: #a8c8e8;
+
+  --warning-bg: #fff4dc;
+  --warning-fg: #8a5a00;
+  --warning-border: #f0d190;
+
+  --danger-bg: #fdeceb;
+  --danger-fg: #a01a13;
+  --danger-border: #f0b3ae;
+
+  /* -- Text -------------------------------------------------------------- */
+  --text-strong: #1a1a1a;
+  --text-body: #403b34;
+  --text-muted: #7c756a;
+  --text-on-dark: #f7f3ee;
+  --text-on-dark-muted: #cdbba4;
+  --text-on-gold: #241a0f;
+
+  /* -- Surfaces ---------------------------------------------------------- */
+  --surface-page: #faf9f7;
+  --surface-card: #ffffff;
+  --surface-sunken: #f4f2ee;
+  --surface-dark: #241a0f;
+  --surface-dark-raised: #33240f;
+
+  --border-subtle: #e8e4dd;
+  --border-strong: #d6d1c7;
+  --border-dark: #4a3520;
+
+  /* -- Typography -------------------------------------------------------- */
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-mono: "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.55;
+
+  --tracking-tight: -0.02em;
+  --tracking-tighter: -0.035em;
+  --tracking-wide: 0.04em;
+  --tracking-widest: 0.12em;
+
+  /* -- Space (4px base) --------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* -- Radius (large, rounded cards) -------------------------------------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+
+  /* -- Elevation (soft, warm-tinted) -------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(36, 26, 15, 0.06);
+  --shadow-sm: 0 2px 6px rgba(36, 26, 15, 0.07);
+  --shadow-md: 0 6px 20px rgba(36, 26, 15, 0.09);
+  --shadow-lg: 0 16px 40px rgba(36, 26, 15, 0.12);
+  --shadow-focus: 0 0 0 3px rgba(246, 180, 0, 0.45);
+
+  /* -- Motion (subtle only) ----------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  /* -- Layout ------------------------------------------------------------- */
+  --container-max: 1200px;
+  --container-wide: 1360px;
+  --header-height: 68px;
+  --utility-height: 36px;
+  --mobile-nav-height: 64px;
+  --z-header: 100;
+  --z-mobile-nav: 100;
+  --z-launcher: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

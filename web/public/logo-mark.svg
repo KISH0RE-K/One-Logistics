@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="One Logistics">
+  <rect width="64" height="64" rx="16" fill="#241A0F"/>
+  <path d="M20 21v14.5c0 6.4 5.4 10.5 12 10.5s12-4.1 12-10.5V21" fill="none" stroke="#F6B400" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="32" cy="16" r="3.5" fill="#F6B400"/>
+</svg>

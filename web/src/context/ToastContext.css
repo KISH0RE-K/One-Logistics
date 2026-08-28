@@ -1,0 +1,103 @@
+.toast-viewport {
+  position: fixed;
+  inset-block-start: auto;
+  inset-block-end: var(--space-6);
+  inset-inline-end: var(--space-6);
+  z-index: var(--z-toast);
+  pointer-events: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.toast-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: min(380px, calc(100vw - var(--space-8)));
+}
+
+.toast {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-3);
+  align-items: start;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--neutral-400);
+  box-shadow: var(--shadow-lg);
+  animation: fade-in-up var(--duration-base) var(--ease-out) both;
+}
+
+.toast__icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.toast__title {
+  font-weight: 700;
+  color: var(--text-strong);
+  font-size: var(--text-base);
+}
+
+.toast__message {
+  font-size: var(--text-base);
+  color: var(--text-body);
+  overflow-wrap: anywhere;
+}
+
+.toast__close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.toast__close:hover {
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+}
+
+.toast--success {
+  border-left-color: var(--success-fg);
+}
+.toast--success .toast__icon {
+  color: var(--success-fg);
+}
+
+.toast--error {
+  border-left-color: var(--danger-fg);
+}
+.toast--error .toast__icon {
+  color: var(--danger-fg);
+}
+
+.toast--warning {
+  border-left-color: var(--warning-fg);
+}
+.toast--warning .toast__icon {
+  color: var(--warning-fg);
+}
+
+.toast--info {
+  border-left-color: var(--info-fg);
+}
+.toast--info .toast__icon {
+  color: var(--info-fg);
+}
+
+@media (max-width: 640px) {
+  .toast-viewport {
+    inset-block-end: calc(var(--mobile-nav-height) + var(--space-4));
+    inset-inline: var(--space-4);
+  }
+
+  .toast-list {
+    width: 100%;
+  }
+}

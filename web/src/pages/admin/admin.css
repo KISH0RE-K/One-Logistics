@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Admin console - metrics, breakdown panels, filters, forms
+   ========================================================================== */
+
+.admin-error {
+  margin-bottom: var(--space-6);
+}
+
+/* -- Metric tiles ---------------------------------------------------------- */
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-10);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  position: relative;
+}
+
+.metric__icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--gold-100);
+  color: var(--brown-700);
+  margin-bottom: var(--space-2);
+}
+
+.metric--success .metric__icon {
+  background: var(--success-bg);
+  color: var(--success-fg);
+}
+
+.metric--danger .metric__icon {
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+}
+
+.metric__label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.metric__value {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-strong);
+  letter-spacing: var(--tracking-tighter);
+}
+
+.metric__hint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* -- Breakdown panels ------------------------------------------------------ */
+
+.admin-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.admin-panel__title {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-1);
+}
+
+.admin-panel__sub {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.admin-panel__empty {
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  padding-block: var(--space-4);
+}
+
+.bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+}
+
+.bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bar-row__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.bar-row__label {
+  font-weight: 700;
+  color: var(--text-strong);
+  font-size: var(--text-base);
+}
+
+.bar-row__count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-weight: 800;
+  color: var(--text-strong);
+}
+
+.bar-row__percent {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.bar-row__track {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--neutral-200);
+  overflow: hidden;
+}
+
+.bar-row__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--brown-600);
+  transition: width var(--duration-slow) var(--ease-out);
+}
+
+.bar-row__track--info .bar-row__fill {
+  background: var(--info-fg);
+}
+
+.bar-row__track--success .bar-row__fill {
+  background: var(--success-fg);
+}
+
+.bar-row__track--warning .bar-row__fill {
+  background: var(--warning-fg);
+}
+
+.bar-row__track--danger .bar-row__fill {
+  background: var(--danger-fg);
+}
+
+.bar-row__track--neutral .bar-row__fill {
+  background: var(--gold-500);
+}
+
+/* -- Filters --------------------------------------------------------------- */
+
+.admin-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.admin-filters__field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.audit-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+/* -- Vehicle form ---------------------------------------------------------- */
+
+.vehicle-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.vehicle-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (max-width: 560px) {
+  .vehicle-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .metric__value {
+    font-size: var(--text-3xl);
+  }
+}

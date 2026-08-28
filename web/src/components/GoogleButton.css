@@ -1,0 +1,40 @@
+.google-button__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 52px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-strong);
+  background: var(--white);
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--text-strong);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.google-button:hover:not(:disabled) {
+  border-color: var(--brown-900);
+  background: var(--surface-sunken);
+}
+
+.google-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.google-button__note {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-align: center;
+}

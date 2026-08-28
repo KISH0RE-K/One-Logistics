@@ -1,0 +1,22 @@
+.full-loader {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  background: var(--surface-page);
+  padding: var(--space-6);
+}
+
+.full-loader__spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.full-loader__spinner svg {
+  animation: spin 900ms linear infinite;
+}

@@ -1,0 +1,152 @@
+/* ==========================================================================
+   AI assistant page
+   ========================================================================== */
+
+.assistant-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.assistant-page__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.assistant-page__header .page-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.assistant-page__header .page-title svg {
+  color: var(--gold-600);
+  flex-shrink: 0;
+}
+
+.assistant-page__layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--space-6);
+  align-items: stretch;
+  /* Fill the viewport below the header so the thread scrolls, not the page. */
+  min-height: 560px;
+  height: calc(100dvh - var(--header-height) - var(--utility-height) - 260px);
+}
+
+/* -- History rail ---------------------------------------------------------- */
+
+.assistant-history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-card);
+  overflow-y: auto;
+}
+
+.assistant-history__label {
+  padding-inline: var(--space-1);
+}
+
+.assistant-history__empty {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  padding: var(--space-3) var(--space-1);
+  line-height: var(--leading-normal);
+}
+
+.assistant-history__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.assistant-history__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  text-align: start;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.assistant-history__item:hover {
+  background: var(--surface-sunken);
+}
+
+.assistant-history__item.is-active {
+  background: var(--brown-900);
+}
+
+.assistant-history__title {
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.assistant-history__item.is-active .assistant-history__title {
+  color: var(--white);
+}
+
+.assistant-history__meta {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.assistant-history__item.is-active .assistant-history__meta {
+  color: var(--gold-300);
+}
+
+/* -- Thread ---------------------------------------------------------------- */
+
+.assistant-page__chat {
+  min-height: 0;
+  min-width: 0;
+}
+
+/* -- Responsive ------------------------------------------------------------
+   On a phone the assistant is a full-screen conversation: the history rail
+   drops away and the thread takes the whole viewport.                       */
+
+@media (max-width: 900px) {
+  .assistant-page__layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .assistant-history {
+    max-height: 190px;
+  }
+}
+
+@media (max-width: 767px) {
+  .assistant-page__layout {
+    min-height: 0;
+    height: calc(
+      100dvh - var(--header-height) - var(--utility-height) -
+        var(--mobile-nav-height) - 150px
+    );
+  }
+
+  .assistant-history {
+    display: none;
+  }
+
+  .assistant-page__chat {
+    height: 100%;
+  }
+
+  .assistant-page__header .btn {
+    width: 100%;
+  }
+}
